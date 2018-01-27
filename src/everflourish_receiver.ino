@@ -1,8 +1,8 @@
 #include "Arduino.h"
 
 // function prototype allowing the function to be used before it is defined.
-static char* dec2binWzerofill(unsigned long dec, unsigned int bitLength);
-void printBinary(unsigned long inNumber, unsigned int digits=32);
+static char *dec2binWzerofill(unsigned long dec, unsigned int bitLength);
+void printBinary(unsigned long inNumber, unsigned int digits = 32);
 
 int rxPin = 2;
 
@@ -83,7 +83,7 @@ void printResult(unsigned long sender, unsigned long group, unsigned int command
 
   Serial.print("command ");
   Serial.println(command);
- 
+
   Serial.print("binary ");
   printBinary(sender);
   Serial.print(" ");
@@ -95,7 +95,7 @@ void printResult(unsigned long sender, unsigned long group, unsigned int command
   Serial.println();
 }
 
-void printBinary(unsigned long inNumber, unsigned int digits=32)
+void printBinary(unsigned long inNumber, unsigned int digits = 32)
 {
   /*
   for (int b = digits-1; b >= 0; b--)
@@ -106,23 +106,29 @@ void printBinary(unsigned long inNumber, unsigned int digits=32)
   Serial.print(dec2binWzerofill(inNumber, digits));
 }
 
-static char* dec2binWzerofill(unsigned long dec, unsigned int bitLength) {
-  static char bin[64]; 
-  unsigned int i=0;
+static char *dec2binWzerofill(unsigned long dec, unsigned int bitLength)
+{
+  static char bin[64];
+  unsigned int i = 0;
 
-  while (dec > 0) {
-    bin[32+i++] = ((dec & 1) > 0) ? '1' : '0';
+  while (dec > 0)
+  {
+    bin[32 + i++] = ((dec & 1) > 0) ? '1' : '0';
     dec = dec >> 1;
   }
 
-  for (unsigned int j = 0; j< bitLength; j++) {
-    if (j >= bitLength - i) {
-      bin[j] = bin[ 31 + i - (j - (bitLength - i)) ];
-    } else {
+  for (unsigned int j = 0; j < bitLength; j++)
+  {
+    if (j >= bitLength - i)
+    {
+      bin[j] = bin[31 + i - (j - (bitLength - i))];
+    }
+    else
+    {
       bin[j] = '0';
     }
   }
   bin[bitLength] = '\0';
-  
+
   return bin;
 }
